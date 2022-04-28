@@ -7,7 +7,7 @@ class Flag {
 
     void start() {
         flagMap = new Matrix(Box.closed);
-        countOfClosedBoxes = Ranges.getSize().x * Ranges.getSize().y;
+        countOfClosedBoxes = Ranges.getSize().x * Ranges.getSize().y - 12;
     }
 
     Box get(Coord coord) {

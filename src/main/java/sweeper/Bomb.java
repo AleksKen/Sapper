@@ -31,7 +31,7 @@ class Bomb {
     private void placeBomb() {
         while (true) {
             Coord coord = Ranges.getRandomCoord();
-            if (Box.bomb == bombMap.get(coord))
+            if ((Box.bomb == bombMap.get(coord)) || (!(Ranges.getAllCoords().contains(coord))))
                 continue;
             bombMap.set(coord, Box.bomb);
             incNumAroundBomb(coord);

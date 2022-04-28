@@ -13,10 +13,11 @@ public class MainSapper extends JFrame {
     private Game game;
     private JPanel panel;
     private JLabel label;
-    private final int Cols = 9;
-    private final int Rows = 9;
-    private final int ImageSize = 50;
-    private final int Bombs = 10;
+    private final int Cols = 7;
+    private final int Rows = 7;
+    private final int ImageH = 60;
+    private final int ImageL = 50;
+    private final int Bombs = 5;
 
     public static void main(String[] args) {
         new MainSapper();
@@ -42,7 +43,10 @@ public class MainSapper extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 for (Coord coord : Ranges.getAllCoords()) {
-                    g.drawImage((Image) game.getBox(coord).image, coord.x * ImageSize, coord.y * ImageSize, this);
+                    if (coord.y % 2 == 0)
+                        g.drawImage((Image) game.getBox(coord).image, coord.x * ImageL + (ImageL / 2), coord.y * ImageH / 4 * 3, this);
+                    else
+                        g.drawImage((Image) game.getBox(coord).image, coord.x * ImageL, coord.y * ImageH / 4 * 3, this);
                 }
             }
         };
@@ -50,8 +54,13 @@ public class MainSapper extends JFrame {
         panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int x = e.getX() / ImageSize;
-                int y = e.getY() / ImageSize;
+                int y = e.getY() / (ImageH / 4 * 3);
+                int x;
+                if (y % 2 == 0)
+                    x = (e.getX() - (ImageL / 2)) / ImageL;
+                else
+                    x = e.getX() / ImageL;
+
                 Coord coord = new Coord(x, y);
                 if (e.getButton() == MouseEvent.BUTTON1)
                     game.pressLeftButton(coord);
@@ -65,7 +74,7 @@ public class MainSapper extends JFrame {
             }
         });
 
-        panel.setPreferredSize(new Dimension(Ranges.getSize().x * ImageSize, Ranges.getSize().y * ImageSize));
+        panel.setPreferredSize(new Dimension(350, 330));
         add(panel);
     }
 
