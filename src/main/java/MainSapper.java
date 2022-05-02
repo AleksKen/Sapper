@@ -9,7 +9,7 @@ import sweeper.Game;
 import sweeper.Ranges;
 
 public class MainSapper extends JFrame {
-
+    private static MainSapper instance = null;
     private Game game;
     private JPanel panel;
     private JLabel label;
@@ -17,11 +17,7 @@ public class MainSapper extends JFrame {
     private final int Rows = 7;
     private final int ImageH = 60;
     private final int ImageL = 50;
-    private final int Bombs = 5;
-
-    public static void main(String[] args) {
-        new MainSapper();
-    }
+    static int Bombs = 5;
 
     private MainSapper() {
         game = new Game(Cols, Rows, Bombs);
@@ -30,6 +26,23 @@ public class MainSapper extends JFrame {
         initLabel();
         initPanel();
         initFrame();
+    }
+
+    public static synchronized MainSapper getInstance(){
+        if (instance == null)
+            instance = new MainSapper();
+        return instance;
+    }
+
+    void startNewGame() {
+        repaint();
+        game = new Game(Cols, Rows, Bombs);
+        game.start();
+        setImages();
+        initLabel();
+        initPanel();
+        initFrame();
+        setVisible(true);
     }
 
     private void initLabel() {
