@@ -12,12 +12,19 @@ public class Settings extends JFrame {
 
     public Settings() {
         setTitle("Что тут думать?!");
-        setBounds(450, 450, 240, 190);
+        setBounds(600, 300, 240, 190);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        JLabel jLabelLinesCount1 = new JLabel("Усложни себе жизнь");
-        JLabel jLabelLinesCount2 = new JLabel("(по умолчанию 5 бомб): ");
+        JLabel jLabelBombsCount1 = new JLabel("Усложни себе жизнь");
+        JLabel jLabelBombsCount2 = new JLabel("(по умолчанию 5 бомб): ");
+        add(jLabelBombsCount1);
+        add(jLabelBombsCount2);
+        JTextField jTextFieldBombssCount = new JTextField();
+        jTextFieldBombssCount.setMaximumSize(new Dimension(100, 20));
+        add(jTextFieldBombssCount);
+        JLabel jLabelLinesCount1 = new JLabel("Укажите длину стороны");
+        JLabel jLabelLinesCount2 = new JLabel("(по умолчанию 6): ");
         add(jLabelLinesCount1);
         add(jLabelLinesCount2);
         JTextField jTextFieldLinesCount = new JTextField();
@@ -31,19 +38,28 @@ public class Settings extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainSapper sapper = MainSapper.getInstance();
-                if (jTextFieldLinesCount.getText().isEmpty()) {
+                if (jTextFieldBombssCount.getText().isEmpty()) {
                     sapper.Bombs = 5;
-                }
-                else {
+                } else {
                     try {
-                        sapper.Bombs = Integer.parseInt(jTextFieldLinesCount.getText());
-                    }
-                    catch (NumberFormatException ex) {
+                        sapper.Bombs = Integer.parseInt(jTextFieldBombssCount.getText());
+                    } catch (NumberFormatException ex) {
                         System.out.println("Необходимо вводить целое число! Вам будет предложена игра по умолчанию");
                     }
                 }
-                sapper.startNewGame();
-                gameSettingsForm.setVisible(false);
+                if (jTextFieldLinesCount.getText().isEmpty()) {
+                    sapper.Rows = 11;
+                    sapper.Cols = 11;
+                } else {
+                    try {
+                        sapper.Cols = Integer.parseInt(jTextFieldLinesCount.getText()) * 2 - 1;
+                        sapper.Rows = Integer.parseInt(jTextFieldLinesCount.getText()) * 2 - 1;
+                    } catch (NumberFormatException ex) {
+                        System.out.println("Необходимо вводить целое число! Вам будет предложена игра по умолчанию");
+                    }
+                    sapper.startNewGame();
+                    gameSettingsForm.setVisible(false);
+                }
             }
         });
     }

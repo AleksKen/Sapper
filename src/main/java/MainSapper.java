@@ -2,19 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.io.PrintWriter;
 
+import sweeper.*;
 import sweeper.Box;
-import sweeper.Coord;
-import sweeper.Game;
-import sweeper.Ranges;
 
 public class MainSapper extends JFrame {
     private static MainSapper instance = null;
     private Game game;
+    private StopWatch stopWatch;
     private JPanel panel;
     private JLabel label;
-    private final int Cols = 7;
-    private final int Rows = 7;
+    static int Cols = 11;
+    static int Rows = 11;
     private final int ImageH = 60;
     private final int ImageL = 50;
     static int Bombs = 5;
@@ -28,7 +29,7 @@ public class MainSapper extends JFrame {
         initFrame();
     }
 
-    public static synchronized MainSapper getInstance(){
+    public static synchronized MainSapper getInstance() {
         if (instance == null)
             instance = new MainSapper();
         return instance;
@@ -82,23 +83,22 @@ public class MainSapper extends JFrame {
                 if (e.getButton() == MouseEvent.BUTTON2)
                     game.start();
                 label.setText(getMessage());
-
                 panel.repaint();
             }
         });
 
-        panel.setPreferredSize(new Dimension(350, 330));
+        panel.setPreferredSize(new Dimension(Cols * ImageL + 30, Rows * ImageH / 4 * 3 + 20));
         add(panel);
     }
 
     private String getMessage() {
         switch (game.getState()) {
             case played:
-                return "Think twice!";
+                return "Подумай дважды!";
             case bombed:
-                return "You lose!";
+                return "Игра окончена!";
             case winner:
-                return "Congratulations!";
+                return "Ура, победа!";
             default:
                 return "";
         }

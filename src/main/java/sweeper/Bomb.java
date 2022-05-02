@@ -1,5 +1,7 @@
 package sweeper;
 
+import java.util.ArrayList;
+
 class Bomb {
     private Matrix bombMap;
     private int totalBombs;
