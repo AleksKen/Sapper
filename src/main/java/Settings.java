@@ -1,3 +1,5 @@
+import sweeper.LeaderBoard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +14,7 @@ public class Settings extends JFrame {
 
     public Settings() {
         setTitle("Что тут думать?!");
-        setBounds(600, 300, 240, 190);
+        setBounds(600, 300, 210, 210);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -30,9 +32,19 @@ public class Settings extends JFrame {
         JTextField jTextFieldLinesCount = new JTextField();
         jTextFieldLinesCount.setMaximumSize(new Dimension(100, 20));
         add(jTextFieldLinesCount);
+        JButton jButtonLeader = new JButton("Книга рекордов");
+        add(jButtonLeader);
         JButton jButtonSetSettings = new JButton("Стартуем!");
         add(jButtonSetSettings);
         setVisible(true);
+
+
+        jButtonLeader.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LeaderBoard leaderBoard = new LeaderBoard();
+            }
+        });
 
         jButtonSetSettings.addActionListener(new ActionListener() {
             @Override

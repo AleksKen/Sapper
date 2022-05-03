@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 import sweeper.*;
 import sweeper.Box;
@@ -11,7 +9,6 @@ import sweeper.Box;
 public class MainSapper extends JFrame {
     private static MainSapper instance = null;
     private Game game;
-    private StopWatch stopWatch;
     private JPanel panel;
     private JLabel label;
     static int Cols = 11;
@@ -19,6 +16,7 @@ public class MainSapper extends JFrame {
     private final int ImageH = 60;
     private final int ImageL = 50;
     static int Bombs = 5;
+
 
     private MainSapper() {
         game = new Game(Cols, Rows, Bombs);
@@ -124,5 +122,4 @@ public class MainSapper extends JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource(fileName));
         return icon.getImage();
     }
-
 }

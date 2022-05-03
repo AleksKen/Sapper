@@ -1,10 +1,15 @@
 package sweeper;
 
-public class Game {
+import java.io.*;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
-    private Bomb bomb;
-    private Flag flag;
+public class Game {
+    private final Bomb bomb;
+    private final Flag flag;
     private GameState state;
+    private ZonedDateTime now;
 
     public GameState getState() {
         return state;
@@ -17,6 +22,7 @@ public class Game {
     }
 
     public void start() {
+        now = ZonedDateTime.now();
         bomb.start();
         flag.start();
         state = GameState.played;
@@ -97,6 +103,29 @@ public class Game {
     private boolean gameOver() {
         if (state == GameState.played)
             return false;
+        if (state == GameState.winner) {
+            long second = now.until(ZonedDateTime.now(), ChronoUnit.SECONDS);
+            TreeMap<Long, String> top10Old = new TreeMap<>();
+            top10Old.put(second, " - количество секунд (количество бомб - " +
+                    bomb.getTotalBombs() + " длина стороны - " +
+                    (Ranges.getSize().x + 1) / 2 + " )");
+            try (BufferedReader reader = new BufferedReader(new FileReader("leaderBoard"))) {
+                String line;
+                while (((line = reader.readLine()) != null) && (!(line.isEmpty()))) {
+                    String[] spl = line.split(" ");
+                    top10Old.put(Long.parseLong(spl[0]), line.substring(spl[0].length()));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (top10Old.size() > 10)
+                top10Old.remove(top10Old.lastKey());
+            try (PrintWriter writer = new PrintWriter("leaderBoard")) {
+                top10Old.forEach((k, v) -> writer.println(k + v));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         start();
         return true;
     }
