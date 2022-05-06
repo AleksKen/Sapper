@@ -21,6 +21,14 @@ public class Game {
         flag = new Flag();
     }
 
+    public Bomb getBomb() {
+        return bomb;
+    }
+
+    public Flag getFlag() {
+        return flag;
+    }
+
     public void start() {
         now = ZonedDateTime.now();
         bomb.start();
@@ -42,13 +50,13 @@ public class Game {
         checkWinner();
     }
 
-    private void checkWinner() {
+    public void checkWinner() {
         if (state == GameState.played)
             if (flag.getCountClosedBoxes() == bomb.getTotalBombs())
                 state = GameState.winner;
     }
 
-    private void openBox(Coord coord) {
+    public void openBox(Coord coord) {
         switch (flag.get(coord)) {
             case opened:
                 setOpenedToClosedBoxesAroundNumber(coord);

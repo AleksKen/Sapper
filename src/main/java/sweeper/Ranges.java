@@ -6,13 +6,13 @@ import java.util.Random;
 public class Ranges {
     private static Coord size;
     private static ArrayList<Coord> allCoords;
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     public static void setSize(Coord _size) {
         size = _size;
         int diag = size.x;
         int str = (size.x + 1) / 2;
-        allCoords = new ArrayList<Coord>();
+        allCoords = new ArrayList<>();
 
         for (int i = 0; i < diag; i++)
             allCoords.add(new Coord(i, str - 1));
@@ -56,7 +56,6 @@ public class Ranges {
                 curNum += 2;
                 curDiag--;
             }
-
         }
     }
 
@@ -77,9 +76,9 @@ public class Ranges {
         return new Coord(random.nextInt(size.x), random.nextInt(size.y));
     }
 
-    static ArrayList<Coord> getCoordsAround(Coord coord) {
-        ArrayList<Coord> list = new ArrayList<Coord>();
-        ArrayList<Coord> assum = new ArrayList<Coord>();
+    public static ArrayList<Coord> getCoordsAround(Coord coord) {
+        ArrayList<Coord> list = new ArrayList<>();
+        ArrayList<Coord> assum = new ArrayList<>();
         if (coord.y % 2 == 1) {
             assum.add(new Coord(coord.x - 1, coord.y - 1));
             assum.add(new Coord(coord.x - 1, coord.y));
@@ -95,7 +94,6 @@ public class Ranges {
             assum.add(new Coord(coord.x, coord.y + 1));
             assum.add(new Coord(coord.x - 1, coord.y));
         }
-
         for (Coord coord1 : assum)
             if (inRange(coord1))
                 list.add(coord1);

@@ -1,8 +1,6 @@
 package sweeper;
 
-import java.util.ArrayList;
-
-class Bomb {
+public class Bomb {
     private Matrix bombMap;
     private int totalBombs;
 
@@ -18,7 +16,7 @@ class Bomb {
         }
     }
 
-    Box get(Coord coord) {
+    public Box get(Coord coord) {
         return bombMap.get(coord);
     }
 
@@ -39,6 +37,11 @@ class Bomb {
             incNumAroundBomb(coord);
             break;
         }
+    }
+
+    public void placeBombHere(Coord coord) {
+        bombMap.set(coord, Box.bomb);
+        incNumAroundBomb(coord);
     }
 
     private void incNumAroundBomb(Coord coord) {

@@ -1,6 +1,6 @@
 package sweeper;
 
-class Flag {
+public class Flag {
 
     private Matrix flagMap;
     private int countOfClosedBoxes;
@@ -23,7 +23,7 @@ class Flag {
         flagMap.set(coord, Box.flaged);
     }
 
-    void toggleFlagedToBox(Coord coord) {
+    public void toggleFlagedToBox(Coord coord) {
         switch (flagMap.get(coord)) {
             case flaged:
                 setClosedToBox(coord);
